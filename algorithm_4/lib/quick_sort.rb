@@ -34,10 +34,10 @@ class QuickSort
       if val && prc.call(val,array[pivotIdx]) < 0
         array[partitionIdx],array[start]=array[start],array[partitionIdx]
         partitionIdx+=1
+        # start+=1
+      end  #val is greater than pivotIdx
         start+=1
-      else #val is greater than pivotIdx
-        start+=1
-      end
+  
     end
       array[pivotIdx],array[partitionIdx-1]=array[partitionIdx-1],array[pivotIdx]
       partitionIdx-=1
