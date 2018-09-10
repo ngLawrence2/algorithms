@@ -55,7 +55,6 @@ class BinarySearchTree
   def delete_node(value,tree_node=@root)
     currentVal =  tree_node.value
     #compare currentVal and value to see which way to go
-    p currentVal.to_s + " <<= current"
     direction = currentVal <=> value
     if direction > 0  # we check our left child
       if tree_node.left.value == value
@@ -65,6 +64,7 @@ class BinarySearchTree
           tree_node.left=nil
           return
         end
+
         if deleteNode.left.nil?
           #we have a right child
           tree_node.right = deleteNode.right
@@ -73,6 +73,16 @@ class BinarySearchTree
           tree_node.left=deleteNode.left
         else
           #we have both child
+          replaceNode=maximum(deleteNode.left)
+          tree_node.left=replaceNode
+          # p "im the value to delete " + value.to_s
+          # p "current root " + tree_node.value.to_s
+          # p "this is replaceNode " + replaceNode.value.to_s
+          # p " this is node to delete " + deleteNode.value.to_s
+          # p "this is the left of node to delete " + deleteNode.left.value.to_s
+          # p "current array " + in_order_traversal(tree_node).inspect
+          delete_node(replaceNode.value,deleteNode.left)
+          return
         end
       else
         delete_node(value,tree_node.left)
@@ -91,9 +101,16 @@ class BinarySearchTree
             return
           elsif deleteNode.right.nil?
             #we have a left child
-            tree_node.left= deleteNode.left
+            tree_node.right = deleteNode.left
           else
             #we have both child
+            # replace with the maximum of the left subtree
+            #call delete on the left sub tree of the value that was promoted
+            replaceNode = maximum(deleteNode.right)
+            tree_node.right=replaceNode
+            delete_node(replaceNode.value,deleteNode.left)
+            return
+            # p in_order_traversal.inspect
           end
       else
         delete_node(value,tree_node.right)

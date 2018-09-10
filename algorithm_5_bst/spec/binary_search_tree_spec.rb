@@ -109,6 +109,20 @@ describe BinarySearchTree do
         expect(parent_of_three.left.value).to eq(2)
       end
 
+
+      #############################
+      # prefilled_bst looks like: #
+      #             (5)           #
+      #            /   \          #
+      #          (3)   (7)        #
+      #         /  \      \       #
+      #      (1)   (4)    (9)     #
+      #     /   \            \    #
+      #   (0)   (2)          (10) #
+      #        /                  #
+      #      (1.5)                #
+      #############################
+      
       context 'when promoted child has its own child' do
         it 'promotes its child to take its place' do
           parent_of_two = prefilled_bst.root.left.left
