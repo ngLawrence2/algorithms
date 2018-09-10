@@ -75,12 +75,6 @@ class BinarySearchTree
           #we have both child
           replaceNode=maximum(deleteNode.left)
           tree_node.left=replaceNode
-          # p "im the value to delete " + value.to_s
-          # p "current root " + tree_node.value.to_s
-          # p "this is replaceNode " + replaceNode.value.to_s
-          # p " this is node to delete " + deleteNode.value.to_s
-          # p "this is the left of node to delete " + deleteNode.left.value.to_s
-          # p "current array " + in_order_traversal(tree_node).inspect
           delete_node(replaceNode.value,deleteNode.left)
           return
         end
