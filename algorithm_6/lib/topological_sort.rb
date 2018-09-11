@@ -1,4 +1,5 @@
 require_relative 'graph'
+require 'byebug'
 
 # Implementing topological sort using both Khan's and Tarian's algorithms
 
@@ -7,7 +8,6 @@ def kahn(vertices)
   queue = []
   vertices.each do |vertex|
     queue << vertex if vertex.in_edges.empty?
-    p vertex.value
   end
   until queue.empty?
     current = queue.shift
@@ -32,22 +32,23 @@ end
 def topological_sort(vertices)
   sorted = []
   visited = Hash.new { |h,v| h[v]=false}
-  recursionStack=Hash.new{|h,v| h[v]=false}
+  cyclic = []
   vertices.each do |vertex|
-    visit(vertex,sorted,visited, recursionStack) if vertex.in_edges.empty?
+    visit(vertex,sorted,visited, cyclic) if vertex.in_edges.empty?
   end
-  sorted
+  return sorted unless cyclic.include?(true)
+  return []
 end
 
-def visit(vertex, result, visited, recursionStack)
-  return [] if recursionStack[vertex.value]
-  return if visited[vertex.value]==true
-  visited[vertex.value]=true
-  recursionStack[vertex.value]=true
-  vertex.out_edges.each do |edge|
-    visit(edge.to_vertex,result,visited,recursionStack)
-  end
-  recursionStack[vertex.value]=false
 
+def visit(vertex, result, visited,cyclic)
+  if visited[vertex.value]==true
+      cyclic << true
+      return
+  end
+  visited[vertex.value]=true
+  vertex.out_edges.each do |edge|
+    visit(edge.to_vertex,result,visited,cyclic)
+  end
   result.unshift(vertex)
 end

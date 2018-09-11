@@ -10,19 +10,22 @@
 require_relative 'topological_sort'
 
 def install_order(arr)
-  hash = {}
+
   packages = {}
-  edge = []
+  max = 0
   arr.each do |k|
     package1 = k[0]
     package2 = k[1]
-    hash[package1] = 1
-    hash[package2] = 1
-    packages[package1] = Vertex.new(package1) if hash[package1]
-    packages[package2] = Vertex.new(package2) if hash[package2]
-    edge << Edge.new(packages[package1], packages[package2])
+    packages[package1] = Vertex.new(package1) unless packages[package1]
+    packages[package2] = Vertex.new(package2) unless packages[package2]
+    Edge.new(packages[package1], packages[package2])
+    max = package1 if max < package1
+    max = package2 if max < package2
   end
-  packages["key"] = Vertex.new(8)
-  packages["key2"] = Vertex.new(7)
-  result = kahn(packages.values)
+  (1..max).each do |k|
+    packages[k] = Vertex.new(k) unless packages[k]
+  end
+
+  arr = kahn(packages.values).map{ |el| el.value}
+  arr.reverse
 end

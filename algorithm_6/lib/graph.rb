@@ -5,6 +5,10 @@ class Vertex
     @in_edges=[]
     @out_edges=[]
   end
+
+  def inspect
+    "#{@value}#{@in_edges}#{@out_edges}"
+  end
 end
 
 class Edge
@@ -16,6 +20,10 @@ class Edge
     @cost=cost
     to_vertex.in_edges<<self
     from_vertex.out_edges<<self
+  end
+
+  def inspect
+    "#{@from_vertex.value}-#{@to_vertex.value}"
   end
 
   def destroy!
