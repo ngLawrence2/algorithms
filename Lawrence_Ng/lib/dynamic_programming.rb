@@ -84,9 +84,10 @@ class DynamicProgramming
   end
 
   def super_frog_hops(n, k)
-    cache = Hash.new { |h,k| h[k]=[]}
+    # cache = Hash.new { |h,k| h[k]=[]}
+    cache=[[]]
     (1..n).each do |i|
-      cache[i] << [i] if i <=k
+      cache[i] << [i] if i <= k
       var = i > k ? k : i - 1
       (1..var).each do |val|
         cache[i] += cache[i-val].map{|el| el + [val]}
