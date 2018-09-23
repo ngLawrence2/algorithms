@@ -84,11 +84,11 @@ class DynamicProgramming
   end
 
   def super_frog_hops(n, k)
-    # cache = Hash.new { |h,k| h[k]=[]}
-    cache=[[]]
+    cache = Hash.new { |h,k| h[k]=[]}
     (1..n).each do |i|
       cache[i] << [i] if i <= k
-      var = i > k ? k : i - 1
+      var = k
+      var = i-1 unless i > k
       (1..var).each do |val|
         cache[i] += cache[i-val].map{|el| el + [val]}
       end
@@ -129,15 +129,6 @@ class DynamicProgramming
     end
     table
   end
-
-
-def getMaxValueFromWeight(weights,values,capacity)
-  result = 0
-  (0..values.length-1).each do |idx|
-    result = values[idx] if (values[idx]>result && weights[idx]<=capacity )
-  end
-  result
-end
 
 
   def maze_solver(maze, start_pos, end_pos)
