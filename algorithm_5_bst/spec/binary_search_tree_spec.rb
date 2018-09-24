@@ -122,7 +122,7 @@ describe BinarySearchTree do
       #        /                  #
       #      (1.5)                #
       #############################
-      
+
       context 'when promoted child has its own child' do
         it 'promotes its child to take its place' do
           parent_of_two = prefilled_bst.root.left.left
@@ -183,4 +183,51 @@ describe BinarySearchTree do
       expect(prefilled_bst.in_order_traversal).to eq(in_order_array)
     end
   end
+
+  #############################
+  # prefilled_bst looks like: #
+  #             (5)           #
+  #            /   \          #
+  #          (3)   (7)        #
+  #         /  \      \       #
+  #      (1)   (4)    (9)     #
+  #     /   \            \    #
+  #   (0)   (2)          (10) #
+  #        /                  #
+  #      (1.5)                #
+  #############################
+
+  #############################
+  # prefilled_bst inverse looks like: #
+  #             (5)            #
+  #            /   \           #
+  #          (7)    (3)        #
+  #         /  \   /   \       #
+  #      (9)   ()(4)   (1)     #
+  #     /             /   \    #
+  #   (10)         (2)    (0)  #
+  #                /           #
+  #            (1.5)           #
+  #############################
+
+  describe '#bfs' do
+    it 'traverses bfs' do
+      result = [5,3,7,1,4,9,0,2,10,1.5]
+      expect(prefilled_bst.bfs).to eq(result)
+    end
+  end
+
+  describe '#dfs' do
+    it 'traverses dfs pre order' do
+      result = [5,3,1,0,2,1.5,4,7,9,10]
+      expect(prefilled_bst.dfs_pre_order).to eq(result)
+    end
+  end
+
+  describe '#inverse' do
+    it 'inverses the binary tree' do
+        in_order_array = [0, 1, 1.5, 2, 3, 4, 5, 7, 9, 10].reverse
+        expect(prefilled_bst.inverse).to eq(in_order_array)
+  end
+end
 end
